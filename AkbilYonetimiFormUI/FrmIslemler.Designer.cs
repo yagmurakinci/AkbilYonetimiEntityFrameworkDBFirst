@@ -82,7 +82,7 @@ namespace AkbilYonetimiFormUI
             this.Controls.Add(this.btnAkbiller);
             this.Name = "FrmIslemler";
             this.Text = "Ana Menü";
-            this.Load += new System.EventHandler(this.FrmIslemler_Load);
+            
             this.ResumeLayout(false);
 
         }
