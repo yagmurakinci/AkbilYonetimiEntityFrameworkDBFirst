@@ -17,7 +17,9 @@ namespace AkbilYonetimiFormUI
 {
     public partial class FrmTalimatIslemleri : Form
     {
-       
+        AKBİLYONETİMİDBEntities akbilYonetimi = new AKBİLYONETİMİDBEntities();
+
+
         //public decimal YuklenecekMiktar { get; private set; }
 
         public FrmTalimatIslemleri()
@@ -32,7 +34,7 @@ namespace AkbilYonetimiFormUI
             try
             {
 
-                cmbBoxAkbiller.DataSource = null;
+                cmbBoxAkbiller.DataSource = akbilYonetimi.Akbiller; //false
                 //yeni kodlar gelecek
                 cmbBoxAkbiller.DisplayMember = "AkbilNo";
                 cmbBoxAkbiller.ValueMember = "AkbilNo";
@@ -86,8 +88,21 @@ namespace AkbilYonetimiFormUI
                 if (txtBakiye.Text == null || txtBakiye.Text == string.Empty)
                     throw new Exception("Yükleme miktarı belirtilmemiş");
 
-                //yeni kodlar gelecek
-                int eklenenTalimatSayisi = 0;
+                Talimatlar yeniTalimat = new Talimatlar()
+                {
+                    AkbilID = cmbBoxAkbiller.SelectedValue.ToString(),
+                    OlustulmaTarihi = DateTime.Now,
+                    YuklendiMi = false,
+                    YuklendigiTarih = null,
+                    YuklenecekTutar = Convert.ToDecimal(txtBakiye.Text)
+                };
+
+                akbilYonetimi.Talimatlar.Add(yeniTalimat);
+                int eklenenTalimatSayisi = akbilYonetimi.SaveChanges();
+
+
+
+
                 if (eklenenTalimatSayisi>0)
                 {
                     MessageBox.Show("Yeni talimat eklendi");
@@ -130,11 +145,13 @@ namespace AkbilYonetimiFormUI
             {
                 if (tumunuGoster) //tumunuGoster true mu?? True ise girecek
                 {
-                    dataGridViewTalimatlar.DataSource = null;
+                    dataGridViewTalimatlar.DataSource = akbilYonetimi.Akbiller;
                 }
                 else
                 {
-                    dataGridViewTalimatlar.DataSource = null;
+                    //dataGridViewTalimatlar.DataSource = akbilYonetimi.KullanicininTalimatlari.Where(x=> x.YuklendiMi == false);
+
+                    dataGridViewTalimatlar.DataSource = akbilYonetimi.KullanicininTalimatlari.Where(x => !x.YuklendiMi);
                 }
                 
 
@@ -163,7 +180,7 @@ namespace AkbilYonetimiFormUI
         {
             try
             {
-                //yeni kodlar gelecek
+                lblBekleyenTalimat.Text = akbilYonetimi.SP_BekleyenTalimatSayisi(GenelIslemler.GirisYapmisKullaniciID).ToString();
             }
             catch (Exception hata)
             {

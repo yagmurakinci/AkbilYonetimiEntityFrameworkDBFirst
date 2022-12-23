@@ -16,7 +16,7 @@ namespace AkbilYonetimiFormUI
 {
     public partial class FrmAkbilIslemleri : Form
     {
-        
+        AKBİLYONETİMİDBEntities akbilYonetimi = new AKBİLYONETİMİDBEntities();
         public FrmAkbilIslemleri()
         {
             InitializeComponent();
@@ -45,7 +45,30 @@ namespace AkbilYonetimiFormUI
                         throw new Exception("Akbil numarası sadece rakamlardan oluşmalıdır!");
                     }
                 }
-                int eklenenAkbilSayisi = 0;
+
+                //akbil numarasından akbil zaten var mı?
+
+                var akbil = akbilYonetimi.Akbiller.FirstOrDefault(a => a.AkbilNo == txtAkbilSeriNo.Text);
+
+                if (akbil!=null)
+                {
+                    MessageBox.Show("Bu seri numarayla akbil mevcuttur!");
+                    return;
+                }
+                Akbiller yeniAkbil = new Akbiller()
+                {
+                    AkbilNo = txtAkbilSeriNo.Text,
+                    AkbilSahibiID = GenelIslemler.GirisYapmisKullaniciID,
+                    KayitTarihi = DateTime.Now,
+                    AkbilTipi = (short)cmbBoxAkbilTipleri.SelectedValue
+                };
+
+                yeniAkbil.SonKullanimTarihi = yeniAkbil.KayitTarihi.AddYears(5);
+
+                akbilYonetimi.Akbiller.Add(yeniAkbil);
+                int eklenenAkbilSayisi = akbilYonetimi.SaveChanges();
+
+
                 //yeni kodlar gelecek
                 if (eklenenAkbilSayisi>0)
                 {
@@ -103,7 +126,7 @@ namespace AkbilYonetimiFormUI
         {
             try
             {
-                dataGridViewAkbiller.DataSource = null;
+                dataGridViewAkbiller.DataSource = akbilYonetimi.Akbiller;
                 //yeni kodlar gelecek
                 //id alanı gizlensin
 
@@ -122,7 +145,7 @@ namespace AkbilYonetimiFormUI
             catch (Exception hata)
             {
 
-                MessageBox.Show("Beklenmedik bir hata oluştu!");
+                MessageBox.Show("Beklenmedik bir hata oluştu!" + hata.Message);
                     //TODO: loglama txt dosyasına yazdır
             }
         }

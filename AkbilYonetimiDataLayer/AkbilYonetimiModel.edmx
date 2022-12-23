@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AKBİLYONETİMİDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Akbiller">
+          <Key>
+            <PropertyRef Name="AkbilNo" />
+          </Key>
+          <Property Name="AkbilNo" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="KayitTarihi" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="AkbilTipi" Type="smallint" Nullable="false" />
+          <Property Name="Bakiye" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SonKullanimTarihi" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="AkbilSahibiID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kullanicilar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KayitTarihi" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Isim" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Soyisim" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Parola" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="DogumTarihi" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Talimatlar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OlustulmaTarihi" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="AkbilID" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="YuklenecekTutar" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="YuklendiMi" Type="bit" Nullable="false" />
+          <Property Name="YuklendigiTarih" Type="datetime2" Precision="7" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AKBİLYONETİMİDB.dbo.KullanicininTalimatlari' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="KullanicininTalimatlari">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="OlustulmaTarihi" />
+            <PropertyRef Name="AkbilID" />
+            <PropertyRef Name="AkbilNo" />
+            <PropertyRef Name="AkbilTipi" />
+            <PropertyRef Name="YuklenecekTutar" />
+            <PropertyRef Name="YuklendiMi" />
+            <PropertyRef Name="KullaniciId" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="OlustulmaTarihi" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="AkbilID" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="AkbilNo" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="AkbilTipi" Type="smallint" Nullable="false" />
+          <Property Name="YuklenecekTutar" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="YuklendiMi" Type="bit" Nullable="false" />
+          <Property Name="YuklendigiTarih" Type="datetime2" Precision="7" />
+          <Property Name="KullaniciId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Akbiller_Kullanicilar">
+          <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="1" />
+          <End Role="Akbiller" Type="Self.Akbiller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Akbiller">
+              <PropertyRef Name="AkbilSahibiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Talimatlar_Akbiller">
+          <End Role="Akbiller" Type="Self.Akbiller" Multiplicity="1" />
+          <End Role="Talimatlar" Type="Self.Talimatlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Akbiller">
+              <PropertyRef Name="AkbilNo" />
+            </Principal>
+            <Dependent Role="Talimatlar">
+              <PropertyRef Name="AkbilID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SP_BekleyenTalimatSayisi" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="kullaniciId" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="AKBİLYONETİMİDBModelStoreContainer">
+          <EntitySet Name="Akbiller" EntityType="Self.Akbiller" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Talimatlar" EntityType="Self.Talimatlar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KullanicininTalimatlari" EntityType="Self.KullanicininTalimatlari" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [KullanicininTalimatlari].[Id] AS [Id], 
+    [KullanicininTalimatlari].[OlustulmaTarihi] AS [OlustulmaTarihi], 
+    [KullanicininTalimatlari].[AkbilID] AS [AkbilID], 
+    [KullanicininTalimatlari].[AkbilNo] AS [AkbilNo], 
+    [KullanicininTalimatlari].[AkbilTipi] AS [AkbilTipi], 
+    [KullanicininTalimatlari].[YuklenecekTutar] AS [YuklenecekTutar], 
+    [KullanicininTalimatlari].[YuklendiMi] AS [YuklendiMi], 
+    [KullanicininTalimatlari].[YuklendigiTarih] AS [YuklendigiTarih], 
+    [KullanicininTalimatlari].[KullaniciId] AS [KullaniciId]
+    FROM [dbo].[KullanicininTalimatlari] AS [KullanicininTalimatlari]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Akbiller_Kullanicilar" Association="Self.FK_Akbiller_Kullanicilar">
+            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="Akbiller" EntitySet="Akbiller" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Talimatlar_Akbiller" Association="Self.FK_Talimatlar_Akbiller">
+            <End Role="Akbiller" EntitySet="Akbiller" />
+            <End Role="Talimatlar" EntitySet="Talimatlar" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AKBİLYONETİMİDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Akbiller">
+          <Key>
+            <PropertyRef Name="AkbilNo" />
+          </Key>
+          <Property Name="AkbilNo" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="AkbilTipi" Type="Int16" Nullable="false" />
+          <Property Name="Bakiye" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SonKullanimTarihi" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="AkbilSahibiID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kullanicilar" Relationship="Self.FK_Akbiller_Kullanicilar" FromRole="Akbiller" ToRole="Kullanicilar" />
+          <NavigationProperty Name="Talimatlar" Relationship="Self.FK_Talimatlar_Akbiller" FromRole="Akbiller" ToRole="Talimatlar" />
+        </EntityType>
+        <EntityType Name="Kullanicilar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Isim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Soyisim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Parola" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DogumTarihi" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Akbiller" Relationship="Self.FK_Akbiller_Kullanicilar" FromRole="Kullanicilar" ToRole="Akbiller" />
+        </EntityType>
+        <EntityType Name="Talimatlar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OlustulmaTarihi" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="AkbilID" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="YuklenecekTutar" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="YuklendiMi" Type="Boolean" Nullable="false" />
+          <Property Name="YuklendigiTarih" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Akbiller" Relationship="Self.FK_Talimatlar_Akbiller" FromRole="Talimatlar" ToRole="Akbiller" />
+        </EntityType>
+        <EntityType Name="KullanicininTalimatlari">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="OlustulmaTarihi" />
+            <PropertyRef Name="AkbilID" />
+            <PropertyRef Name="AkbilNo" />
+            <PropertyRef Name="AkbilTipi" />
+            <PropertyRef Name="YuklenecekTutar" />
+            <PropertyRef Name="YuklendiMi" />
+            <PropertyRef Name="KullaniciId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="OlustulmaTarihi" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="AkbilID" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="AkbilNo" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="AkbilTipi" Type="Int16" Nullable="false" />
+          <Property Name="YuklenecekTutar" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="YuklendiMi" Type="Boolean" Nullable="false" />
+          <Property Name="YuklendigiTarih" Type="DateTime" Precision="7" />
+          <Property Name="KullaniciId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Akbiller_Kullanicilar">
+          <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="1" />
+          <End Role="Akbiller" Type="Self.Akbiller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Akbiller">
+              <PropertyRef Name="AkbilSahibiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Talimatlar_Akbiller">
+          <End Role="Akbiller" Type="Self.Akbiller" Multiplicity="1" />
+          <End Role="Talimatlar" Type="Self.Talimatlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Akbiller">
+              <PropertyRef Name="AkbilNo" />
+            </Principal>
+            <Dependent Role="Talimatlar">
+              <PropertyRef Name="AkbilID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AKBİLYONETİMİDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Akbiller" EntityType="Self.Akbiller" />
+          <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" />
+          <EntitySet Name="Talimatlar" EntityType="Self.Talimatlar" />
+          <EntitySet Name="KullanicininTalimatlari" EntityType="Self.KullanicininTalimatlari" />
+          <AssociationSet Name="FK_Akbiller_Kullanicilar" Association="Self.FK_Akbiller_Kullanicilar">
+            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="Akbiller" EntitySet="Akbiller" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Talimatlar_Akbiller" Association="Self.FK_Talimatlar_Akbiller">
+            <End Role="Akbiller" EntitySet="Akbiller" />
+            <End Role="Talimatlar" EntitySet="Talimatlar" />
+          </AssociationSet>
+          <FunctionImport Name="SP_BekleyenTalimatSayisi">
+            <Parameter Name="kullaniciId" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AKBİLYONETİMİDBModelStoreContainer" CdmEntityContainer="AKBİLYONETİMİDBEntities">
+          <EntitySetMapping Name="Akbiller">
+            <EntityTypeMapping TypeName="AKBİLYONETİMİDBModel.Akbiller">
+              <MappingFragment StoreEntitySet="Akbiller">
+                <ScalarProperty Name="AkbilNo" ColumnName="AkbilNo" />
+                <ScalarProperty Name="KayitTarihi" ColumnName="KayitTarihi" />
+                <ScalarProperty Name="AkbilTipi" ColumnName="AkbilTipi" />
+                <ScalarProperty Name="Bakiye" ColumnName="Bakiye" />
+                <ScalarProperty Name="SonKullanimTarihi" ColumnName="SonKullanimTarihi" />
+                <ScalarProperty Name="AkbilSahibiID" ColumnName="AkbilSahibiID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanicilar">
+            <EntityTypeMapping TypeName="AKBİLYONETİMİDBModel.Kullanicilar">
+              <MappingFragment StoreEntitySet="Kullanicilar">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KayitTarihi" ColumnName="KayitTarihi" />
+                <ScalarProperty Name="Isim" ColumnName="Isim" />
+                <ScalarProperty Name="Soyisim" ColumnName="Soyisim" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Parola" ColumnName="Parola" />
+                <ScalarProperty Name="DogumTarihi" ColumnName="DogumTarihi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Talimatlar">
+            <EntityTypeMapping TypeName="AKBİLYONETİMİDBModel.Talimatlar">
+              <MappingFragment StoreEntitySet="Talimatlar">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OlustulmaTarihi" ColumnName="OlustulmaTarihi" />
+                <ScalarProperty Name="AkbilID" ColumnName="AkbilID" />
+                <ScalarProperty Name="YuklenecekTutar" ColumnName="YuklenecekTutar" />
+                <ScalarProperty Name="YuklendiMi" ColumnName="YuklendiMi" />
+                <ScalarProperty Name="YuklendigiTarih" ColumnName="YuklendigiTarih" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KullanicininTalimatlari">
+            <EntityTypeMapping TypeName="AKBİLYONETİMİDBModel.KullanicininTalimatlari">
+              <MappingFragment StoreEntitySet="KullanicininTalimatlari">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OlustulmaTarihi" ColumnName="OlustulmaTarihi" />
+                <ScalarProperty Name="AkbilID" ColumnName="AkbilID" />
+                <ScalarProperty Name="AkbilNo" ColumnName="AkbilNo" />
+                <ScalarProperty Name="AkbilTipi" ColumnName="AkbilTipi" />
+                <ScalarProperty Name="YuklenecekTutar" ColumnName="YuklenecekTutar" />
+                <ScalarProperty Name="YuklendiMi" ColumnName="YuklendiMi" />
+                <ScalarProperty Name="YuklendigiTarih" ColumnName="YuklendigiTarih" />
+                <ScalarProperty Name="KullaniciId" ColumnName="KullaniciId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_BekleyenTalimatSayisi" FunctionName="AKBİLYONETİMİDBModel.Store.SP_BekleyenTalimatSayisi" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

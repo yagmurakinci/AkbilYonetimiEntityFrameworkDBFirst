@@ -51,12 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Akbil.cs" />
     <Compile Include="Entities\Enums.cs" />
-    <Compile Include="Entities\IIDProperty.cs" />
-    <Compile Include="Entities\IKayitTarihiProperty.cs" />
-    <Compile Include="Entities\Kullanici.cs" />
-    <Compile Include="Entities\Talimat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

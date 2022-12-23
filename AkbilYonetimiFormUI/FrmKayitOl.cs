@@ -19,7 +19,7 @@ namespace AkbilYonetimiFormUI
         {
             InitializeComponent();
         }
-        
+        AKBİLYONETİMİDBEntities akbilYonetimi = new AKBİLYONETİMİDBEntities();
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -33,8 +33,38 @@ namespace AkbilYonetimiFormUI
                         return; 
                     }
                 }
+                //aynı emailden varsa hata ver
+                //linq komutları entity framework ile çokça kullanılır
+
+
+                //select count(*) from Kullanicilar where
+                //Email='bbb'
+
+                //if (akbilYonetimi.Kullanicilar.FirstorDefault(x=> x.Email.ToLower()==txtEmail.Text.ToLower())!=null)
+
+                if (akbilYonetimi.Kullanicilar.Count(x=> x.Email.ToLower()==txtEmail.Text.ToLower())!=0)
+                {
+                    MessageBox.Show("Bu email sistemde zaten vardır");
+                    return;
+                }
+
+                Kullanicilar yeniKullanici = new Kullanicilar()
+                {
+                    DogumTarihi = dtpDogumTarihi.Value,
+                    Email = txtEmail.Text,
+                    Isim = txtIsim.Text,
+                    Soyisim = txtSoyisim.Text,
+                    KayitTarihi = DateTime.Now,
+                    Parola = GenelIslemler.MD5Encryption(txtSifre.Text)
+
+                };
+
+                akbilYonetimi.Kullanicilar.Add(yeniKullanici);
+                int sonuc = akbilYonetimi.SaveChanges(); // add, update, delete
+
+                
+                
                 //yeni kodlar gelecek
-                int sonuc = 0;
                 if (sonuc>0)
                 {
                     MessageBox.Show("Yeni Kullanıcı Eklendi");

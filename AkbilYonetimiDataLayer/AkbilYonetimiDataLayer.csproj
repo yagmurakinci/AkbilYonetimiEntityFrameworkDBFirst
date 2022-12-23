@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,14 +53,63 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Akbiller.cs">
+      <DependentUpon>AkbilYonetimiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AkbilYonetimiModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AkbilYonetimiModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AkbilYonetimiModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AkbilYonetimiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AkbilYonetimiModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AkbilYonetimiModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="ISayisalDonusluProsedur.cs" />
     <Compile Include="IVeriTabaniIslemleri.cs" />
+    <Compile Include="Kullanicilar.cs">
+      <DependentUpon>AkbilYonetimiModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KullanicininTalimatlari.cs">
+      <DependentUpon>AkbilYonetimiModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLVeriTabaniIslemleri.cs" />
+    <Compile Include="Talimatlar.cs">
+      <DependentUpon>AkbilYonetimiModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="AkbilYonetimiModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AkbilYonetimiModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="AkbilYonetimiModel.edmx.diagram">
+      <DependentUpon>AkbilYonetimiModel.edmx</DependentUpon>
+    </None>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AkbilYonetimiModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AkbilYonetimiModel.edmx</DependentUpon>
+      <LastGenOutput>AkbilYonetimiModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="AkbilYonetimiModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AkbilYonetimiModel.edmx</DependentUpon>
+      <LastGenOutput>AkbilYonetimiModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

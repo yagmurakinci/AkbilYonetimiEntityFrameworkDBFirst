@@ -16,16 +16,14 @@ namespace AkbilYonetimiFormUI
     public partial class FrmGiris : Form
     {
         public string Email { get; set; }
+        AKBİLYONETİMİDBEntities akbilYonetimi = new AKBİLYONETİMİDBEntities();
         public FrmGiris()
         {
             InitializeComponent();
         }
       
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
+      
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -44,8 +42,19 @@ namespace AkbilYonetimiFormUI
                         return; 
                     }
                 }
-                
-                    //yeni kodlar gelecek
+
+                var girisYapanKullanici = akbilYonetimi.Kullanicilar.FirstOrDefault(k => k.Email.ToLower() == txtEmail.Text.ToLower () && k.Parola == GenelIslemler.MD5Encryption(txtSifre.Text));
+
+                if (girisYapanKullanici==null)
+                {
+                    MessageBox.Show("Kullanıcı adınız ya da şifreniz yanlıştır!");
+                    return;
+                }
+
+                GenelIslemler.GirisYapmisKullaniciID = girisYapanKullanici.Id;
+                GenelIslemler.GirisYapmisKullaniciAdSoyad = $"{girisYapanKullanici.Isim} {girisYapanKullanici.Soyisim}";
+
+
                     MessageBox.Show($"Hoşgeldiniz.... {GenelIslemler.GirisYapmisKullaniciAdSoyad}");
                     if (checkBoxBeniHatirla.Checked)
                     {

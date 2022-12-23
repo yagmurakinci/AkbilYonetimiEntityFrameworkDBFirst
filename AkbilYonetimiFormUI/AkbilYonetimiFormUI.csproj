@@ -146,7 +146,7 @@
       <Name>AkbilYonetimiDataLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\AkbilYonetimiEntityLayer\AkbilYonetimiEntityLayer.csproj">
-      <Project>{ebf6f9b3-884e-4e55-9ae2-f6a0bcccecab}</Project>
+      <Project>{EBF6F9B3-884E-4E55-9AE2-F6A0BCCCECAB}</Project>
       <Name>AkbilYonetimiEntityLayer</Name>
     </ProjectReference>
   </ItemGroup>
