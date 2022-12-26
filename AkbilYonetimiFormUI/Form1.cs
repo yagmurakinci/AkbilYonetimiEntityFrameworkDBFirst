@@ -43,8 +43,8 @@ namespace AkbilYonetimiFormUI
                     }
                 }
 
-                var girisYapanKullanici = akbilYonetimi.Kullanicilar.FirstOrDefault(k => k.Email.ToLower() == txtEmail.Text.ToLower () && k.Parola == GenelIslemler.MD5Encryption(txtSifre.Text));
-
+                string parola = GenelIslemler.MD5Encryption(txtSifre.Text);
+                var girisYapanKullanici = akbilYonetimi.Kullanicilar.FirstOrDefault(k => k.Email.ToLower() == txtEmail.Text.ToLower() && k.Parola == parola);
                 if (girisYapanKullanici==null)
                 {
                     MessageBox.Show("Kullanıcı adınız ya da şifreniz yanlıştır!");

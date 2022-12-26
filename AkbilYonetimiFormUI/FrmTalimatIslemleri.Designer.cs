@@ -32,6 +32,13 @@ namespace AkbilYonetimiFormUI
             this.components = new System.ComponentModel.Container();
             this.menuStripTalimatlar = new System.Windows.Forms.MenuStrip();
             this.anaMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.islemlerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.disariAktarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xmlDisariAktarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jsonDisariAktarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.iceriAktarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xmlIceriAktarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jsonIceriAktarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cikisyapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.lblBekleyenTalimat = new System.Windows.Forms.Label();
@@ -46,6 +53,8 @@ namespace AkbilYonetimiFormUI
             this.contextMenuStripTalimatGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.talimatigerceklestirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.talimatiSilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStripTalimatlar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTalimatlar)).BeginInit();
             this.groupBoxBakiye.SuspendLayout();
@@ -56,6 +65,7 @@ namespace AkbilYonetimiFormUI
             // 
             this.menuStripTalimatlar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.anaMenuToolStripMenuItem,
+            this.islemlerToolStripMenuItem,
             this.cikisyapToolStripMenuItem});
             this.menuStripTalimatlar.Location = new System.Drawing.Point(0, 0);
             this.menuStripTalimatlar.Name = "menuStripTalimatlar";
@@ -70,6 +80,61 @@ namespace AkbilYonetimiFormUI
             this.anaMenuToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.anaMenuToolStripMenuItem.Text = "ANA MENÜ";
             this.anaMenuToolStripMenuItem.Click += new System.EventHandler(this.anaMenuToolStripMenuItem_Click);
+            // 
+            // islemlerToolStripMenuItem
+            // 
+            this.islemlerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.disariAktarToolStripMenuItem,
+            this.iceriAktarToolStripMenuItem});
+            this.islemlerToolStripMenuItem.Name = "islemlerToolStripMenuItem";
+            this.islemlerToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.islemlerToolStripMenuItem.Text = "İŞLEMLER";
+            // 
+            // disariAktarToolStripMenuItem
+            // 
+            this.disariAktarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.xmlDisariAktarToolStripMenuItem,
+            this.jsonDisariAktarToolStripMenuItem});
+            this.disariAktarToolStripMenuItem.Name = "disariAktarToolStripMenuItem";
+            this.disariAktarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.disariAktarToolStripMenuItem.Text = "DIŞARI AKTAR";
+            // 
+            // xmlDisariAktarToolStripMenuItem
+            // 
+            this.xmlDisariAktarToolStripMenuItem.Name = "xmlDisariAktarToolStripMenuItem";
+            this.xmlDisariAktarToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.xmlDisariAktarToolStripMenuItem.Text = "XML ile DIŞARI AKTAR";
+            this.xmlDisariAktarToolStripMenuItem.Click += new System.EventHandler(this.xmlDisariAktarToolStripMenuItem_Click);
+            // 
+            // jsonDisariAktarToolStripMenuItem
+            // 
+            this.jsonDisariAktarToolStripMenuItem.Name = "jsonDisariAktarToolStripMenuItem";
+            this.jsonDisariAktarToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.jsonDisariAktarToolStripMenuItem.Text = "JSON ile DIŞARI AKTAR";
+            this.jsonDisariAktarToolStripMenuItem.Click += new System.EventHandler(this.jsonDisariAktarToolStripMenuItem_Click);
+            // 
+            // iceriAktarToolStripMenuItem
+            // 
+            this.iceriAktarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.xmlIceriAktarToolStripMenuItem,
+            this.jsonIceriAktarToolStripMenuItem});
+            this.iceriAktarToolStripMenuItem.Name = "iceriAktarToolStripMenuItem";
+            this.iceriAktarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.iceriAktarToolStripMenuItem.Text = "İÇERİ AKTAR";
+            // 
+            // xmlIceriAktarToolStripMenuItem
+            // 
+            this.xmlIceriAktarToolStripMenuItem.Name = "xmlIceriAktarToolStripMenuItem";
+            this.xmlIceriAktarToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.xmlIceriAktarToolStripMenuItem.Text = "XML ile İÇERİ AKTAR";
+            this.xmlIceriAktarToolStripMenuItem.Click += new System.EventHandler(this.xmlIceriAktarToolStripMenuItem_Click);
+            // 
+            // jsonIceriAktarToolStripMenuItem
+            // 
+            this.jsonIceriAktarToolStripMenuItem.Name = "jsonIceriAktarToolStripMenuItem";
+            this.jsonIceriAktarToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.jsonIceriAktarToolStripMenuItem.Text = "JSON ile İÇERİ AKTAR";
+            this.jsonIceriAktarToolStripMenuItem.Click += new System.EventHandler(this.jsonIceriAktarToolStripMenuItem_Click);
             // 
             // cikisyapToolStripMenuItem
             // 
@@ -89,7 +154,6 @@ namespace AkbilYonetimiFormUI
             this.label1.Size = new System.Drawing.Size(129, 16);
             this.label1.TabIndex = 1;
             this.label1.Text = "Bekleyen Talimat";
-
             // 
             // lblBekleyenTalimat
             // 
@@ -205,6 +269,10 @@ namespace AkbilYonetimiFormUI
             this.talimatiSilToolStripMenuItem.Text = "Talimatı Sil";
             this.talimatiSilToolStripMenuItem.Click += new System.EventHandler(this.talimatiSilToolStripMenuItem_Click);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // FrmTalimatIslemleri
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -250,5 +318,14 @@ namespace AkbilYonetimiFormUI
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTalimatGrid;
         private System.Windows.Forms.ToolStripMenuItem talimatigerceklestirToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem talimatiSilToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem islemlerToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem disariAktarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xmlDisariAktarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem jsonDisariAktarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem iceriAktarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xmlIceriAktarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem jsonIceriAktarToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

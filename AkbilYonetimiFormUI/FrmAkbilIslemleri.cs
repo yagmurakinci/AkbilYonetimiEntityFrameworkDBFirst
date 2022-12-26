@@ -126,7 +126,14 @@ namespace AkbilYonetimiFormUI
         {
             try
             {
-                dataGridViewAkbiller.DataSource = akbilYonetimi.Akbiller;
+                //BindingSource kaynak = new BindingSource();
+                //kaynak.DataSource = akbilYonetimi.Akbiller;
+                //dataGridViewAkbiller.DataSource = kaynak;
+            //    // Resize the DataGridView columns to fit the newly loaded content.
+            //dataGridView1.AutoResizeColumns(
+            //    DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
+                dataGridViewAkbiller.DataSource = akbilYonetimi.Akbiller.ToList();
+
                 //yeni kodlar gelecek
                 //id alanı gizlensin
 

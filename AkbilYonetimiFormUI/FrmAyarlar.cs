@@ -15,7 +15,8 @@ namespace AkbilYonetimiFormUI
 {
     public partial class FrmAyarlar : Form
     {
-        
+        AKBİLYONETİMİDBEntities akbilYonetimi = new AKBİLYONETİMİDBEntities();
+        private Kullanicilar kullanici;
         public FrmAyarlar()
         {
             InitializeComponent();
@@ -30,7 +31,10 @@ namespace AkbilYonetimiFormUI
         {
             try
             {
-                //yeni kodlar gelecek
+                kullanici = akbilYonetimi.Kullanicilar.FirstOrDefault(x => x.Id == GenelIslemler.GirisYapmisKullaniciID);
+                txtIsim.Text = kullanici.Isim;
+                txtSoyisim.Text = kullanici.Soyisim;
+                dtpDogumTarihi.Text = kullanici.DogumTarihi.ToString();
 
             }
             catch (Exception hata)
@@ -50,7 +54,11 @@ namespace AkbilYonetimiFormUI
                     return;
                 }
 
-                //yeni kodlar gelecek
+                kullanici.Isim = txtIsim.Text;
+                kullanici.Soyisim = txtSoyisim.Text;
+                kullanici.DogumTarihi = dtpDogumTarihi.Value;
+                akbilYonetimi.SaveChanges();
+                MessageBox.Show("Bilgileriniz Güncellendi");
 
             }
             catch (Exception hata)
