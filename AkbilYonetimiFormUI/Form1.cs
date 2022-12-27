@@ -56,6 +56,10 @@ namespace AkbilYonetimiFormUI
 
 
                     MessageBox.Show($"Hoşgeldiniz.... {GenelIslemler.GirisYapmisKullaniciAdSoyad}");
+
+                LogYoneticisi.LoguYaz($"{GenelIslemler.GirisYapmisKullaniciAdSoyad} adlı kullanıcı giriş yaptı.");
+
+
                     if (checkBoxBeniHatirla.Checked)
                     {
                         Properties.Settings.Default.KullaniciEmail = txtEmail.Text;
@@ -71,7 +75,8 @@ namespace AkbilYonetimiFormUI
             catch (Exception hata)
             {
                 
-                MessageBox.Show("Beklenmedik hata oluştu! HATA:" + hata.Message);
+                MessageBox.Show("Beklenmedik hata oluştu!");
+                LogYoneticisi.LoguYaz($"FrmGiris GirisYap metodu HATA: {hata}");
             }
         }
 

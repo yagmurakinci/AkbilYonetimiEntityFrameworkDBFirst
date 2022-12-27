@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AkbilYonetimBusinessLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace AkbilYonetimiFormUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            LogYoneticisi.LoguYaz($"***** Uygulama Başladı. *****");
             Application.Run(new FrmGiris());
         }
     }
